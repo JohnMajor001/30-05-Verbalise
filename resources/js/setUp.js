@@ -14,13 +14,17 @@ function addItem() {
   var randNum = ((Math.random() * 9999999999) * (Math.random() * 99999999999));
   var randNumId = randNum + noOfTeams;
   var listItem = document.createElement("li");
-  listItem.innerHTML = `<img class='deleteBtn teamBtn' id='deleteBtn_${randNumId}' src='./resources/images/x_delete_button.png'/>
-                        <input maxlength="20" class="teamNames" placeholder='Team ${noOfTeams}'></input>
-                        <div class='playerContainer' id='playerContainer_${randNumId}'>
-                        <input maxlength="20" class='playerNames' placeholder='Player 1'/>
-                        <input maxlength="20" class='playerNames' placeholder='Player 2'/>
-                        </div>
-                        <button class='addPlayerBtn btn' id='addPlayer_${randNumId}'>Add third player</button>`;
+  listItem.innerHTML =
+  `<img class='deleteBtn teamBtn' id='deleteBtn_${randNumId}'
+    src='./resources/images/x_delete_button.png'/>
+    <input maxlength="20" class="teamNames" placeholder='Team ${noOfTeams}'>
+    </input>
+    <div class='playerContainer' id='playerContainer_${randNumId}'>
+    <input maxlength="20" class='playerNames' placeholder='Player 1'/>
+    <input maxlength="20" class='playerNames' placeholder='Player 2'/>
+    </div>
+    <button class='addPlayerBtn btn'
+    id='addPlayer_${randNumId}'>Add third player</button>`;
   document.getElementById('list').appendChild(listItem);
   var buttonDelete = document.getElementById(`deleteBtn_${randNumId}`);
   buttonDelete.addEventListener("click", deleteItem);
@@ -83,15 +87,17 @@ function showSettings() {
     // 2. Check correct number of teams
     if(noOfTeams < 2) {
       var message = "You need at least two teams";
-      inputErrorMessage(message, 'errorMessageContainer-two-teams', 'errorMessages-two-teams'); // CHANGE THIS TO SOMETHING GOOD - DOES THE MESSAGE APPEAR AND DISSAPPEAR correctly?
+      inputErrorMessage(message, 'errorMessageContainer-two-teams',
+      'errorMessages-two-teams');
       return;
     }
     // 3. Check Teams have a value entered
     var teamNames = document.querySelectorAll('.teamNames');
     for(i = 0; i < teamNames.length; i++) {
       if(teamNames[i].value.length < 2) {
-        var message = 'Enter a team name in all boxes provided'; // CHANGE THIS TO SOMETHING GOOD
-        inputErrorMessage(message, 'errorMessageContainer-team-names', 'errorMessages-team-names');
+        var message = 'Enter a team name in all boxes provided';
+        inputErrorMessage(message, 'errorMessageContainer-team-names',
+        'errorMessages-team-names');
         return;
       }
     }
@@ -99,20 +105,19 @@ function showSettings() {
     var playerNames = document.querySelectorAll('.playerNames');
     for(i = 0; i < playerNames.length; i++) {
       if(playerNames[i].value.length < 2) {
-        var message = 'Enter a player name in all boxes provided'; // CHANGE THIS TO SOMETHING GOOD
-        inputErrorMessage(message, 'errorMessageContainer-player-names', 'errorMessages-player-names');
+        var message = 'Enter a player name in all boxes provided';
+        inputErrorMessage(message, 'errorMessageContainer-player-names',
+        'errorMessages-player-names');
         return;
       }
     }
-  // Make everything appear
+  // Make everything dis/appear
   document.getElementById('game').className = 'hidden';
-  document.getElementById('settings-modal').className = 'initialSettings';
-  document.getElementById('settings-container').className = 'initialSettings';
- // slight delay to create fade in
-setTimeout(function(){
+  list.className = 'hidden';
   document.getElementById('settings-modal').className = 'settings-modal';
   document.getElementById('settings-container').className = 'modal-container';
-}, 1);
+
+  // Set all variables necessary for gathering setting info from users
     let zero = 0;
     let one = 1;
     let two = 2;
@@ -135,7 +140,7 @@ setTimeout(function(){
 
     let spicy = 'Spicy';
     let standard = 'Standard'
-    //                                            CHANGE THIS BACK WHEN DONE TESTING!! Change timer here and in variables
+    // CHANGE THIS BACK WHEN DONE TESTING!! Change timer here and in variables
   let settingsHTML = `<h1>Settings</h1>
                       <div class='settings-row'>
                         <span>Points needed to win</span>
@@ -190,7 +195,9 @@ setTimeout(function(){
                         </select>
                       </div>`;
                       /**/
-                      // INSERT SOMETHING SO THAT PEOPLE KNOW THAT THEY ARE DRINKING AT THEIR OWN RISK/SHOULD DRINK RESPONSIBLY ETC
+// INSERT SOMETHING SO THAT PEOPLE KNOW THAT THEY ARE DRINKING
+//  AT THEIR OWN RISK/SHOULD DRINK RESPONSIBLY ETC
+
 // Change relevant button functions
   document.getElementById('settingsContent').innerHTML = settingsHTML;
   document.getElementById('closeSettings').addEventListener('click', hideSettings);
@@ -270,6 +277,7 @@ function saveSettings() {
         }
         function startDaGame() {
           document.getElementById('game').className = '';
+          list.className = '';
           // Ensure first team that starts is random
         let randomStart = Math.floor(Math.random() * noOfTeams);
         whichTeamPlays += randomStart;

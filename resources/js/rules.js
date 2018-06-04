@@ -1,14 +1,18 @@
+// set innerHTML of rules content
+function setRulesContentAndAddListeners(content, removeThisListener, addThisListener) {
+  rulesContent.innerHTML = content;
+  nextArrow.className = 'rulesArrows';
+  nextArrow.removeEventListener('click', removeThisListener);
+  nextArrow.addEventListener('click', addThisListener);
+}
 // Show and hide rules
 function showRules() {
-  document.getElementById('closeRules').className = 'hidden';
-  document.getElementById('mainTitle').className = 'hidden';
-  document.getElementById('game').className = 'hidden';
-  document.getElementById('modal').className = 'rulesBeginToAppear';
-  document.getElementById('modal-container').className = 'rulesBeginToAppear';
-  setTimeout(function(){
-    document.getElementById('modal').className = 'rulesAppear';
-    document.getElementById('modal-container').className = 'rulesAppear';
-  }, 1);
+  document.getElementById('closeRules').className = 'hideNow';
+  document.getElementById('mainTitle').className = 'hideNow';
+  document.getElementById('game').className = 'hideNow';
+
+  document.getElementById('modal').className = 'rulesAppear';
+  document.getElementById('modal-container').className = 'rulesAppear';
 
   rulesContent.innerHTML = rulesNo1;
   nextArrow.className = 'rulesArrows';
@@ -16,18 +20,12 @@ function showRules() {
 }
 
 function rulesContentChangeNo2() {
-  document.getElementById('closeRules').className = 'hidden';
-  nextArrow.className = 'rulesArrows';
-  rulesContent.innerHTML = rulesNo2;
-  nextArrow.removeEventListener('click', rulesContentChangeNo2);
-  nextArrow.addEventListener('click', rulesContentChangeNo3);
+  setRulesContentAndAddListeners(rulesNo2,
+    rulesContentChangeNo2, rulesContentChangeNo3);
 }
 function rulesContentChangeNo3() {
-  document.getElementById('closeRules').className = 'hidden';
-  nextArrow.className = 'rulesArrows';
-  rulesContent.innerHTML = rulesNo3;
-  nextArrow.removeEventListener('click', rulesContentChangeNo3);
-  nextArrow.addEventListener('click', rulesContentChangeNo4)
+  setRulesContentAndAddListeners(rulesNo3,
+    rulesContentChangeNo3, rulesContentChangeNo4);
 }
 function rulesContentChangeNo4() {
   nextArrow.className = 'hidden';
@@ -42,5 +40,4 @@ function hideRules() {
   document.getElementById('game').className = '';
   document.getElementById('mainTitle').className = '';
   nextArrow.className = 'rulesArrows';
- // list.className = ' ';
 }
