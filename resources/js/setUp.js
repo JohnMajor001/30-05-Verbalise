@@ -10,10 +10,10 @@ document.getElementById('closeRules').addEventListener('click', hideRules);
 // Add Teams and players
 function addItem() {
   // Check if it's a mobile and
-  if(((window.innerWidth <= 600) && (noOfTeams == 6)) || noOfTeams == 12) {
+  if(((window.innerWidth <= 700) && (noOfTeams == 5)) || noOfTeams == 12) {
     list.className = 'list_js_media_query';
   }
-  
+
   // If ready button is hidden, show it
   // Also change text of add team button
   if(readyBtn.className == 'hideNow') {
@@ -85,7 +85,7 @@ function deleteItem() {
     addItemBtn.innerHTML = 'Begin!';
     document.getElementById('mainTitle').className = '';
   }
-  if(noOfTeams == 6 || noOfTeams == 12) {
+  if(noOfTeams == 5 || noOfTeams == 12) {
     list.className = '';
   }
 }
