@@ -69,6 +69,8 @@ var spicyCategories = [];
 var disneyCategories = [];
 var usefulNumber = 0;
 
+var drinkResponsibleMessage = `I know it's no fun but...
+  ...please drink responsibly. Somebody somewhere loves ye!`;
 
 // Rules Content
 var rulesNo1 = `<h1>Overview</h1>

@@ -9,6 +9,14 @@ rulesBtn.addEventListener('click', showRules);
 document.getElementById('closeRules').addEventListener('click', hideRules);
 // Add Teams and players
 function addItem() {
+  // If ready button is hidden, show it
+  // Also change text of add team button
+  if(readyBtn.className == 'hideNow') {
+    readyBtn.className = 'btn initialBtn';
+    addItemBtn.innerHTML = 'Add Another Team';
+  }
+
+
   noOfTeams += 1;
   noOfPlayers += 2;
   var randNum = ((Math.random() * 9999999999) * (Math.random() * 99999999999));
@@ -62,6 +70,13 @@ function deleteItem() {
   var item = this.parentNode;
   document.getElementById('list').removeChild(item);
   noOfTeams -= 1;
+
+  // if you end up with no teams, hide ready button
+  // Also change wording of add team button
+  if(noOfTeams == 0) {
+    readyBtn.className = 'hideNow';
+    addItemBtn.innerHTML = 'Get Started';
+  }
 }
 function hideSettings() {
   document.getElementById('settings-modal').className = 'hidden';
@@ -195,8 +210,6 @@ function showSettings() {
                         </select>
                       </div>`;
                       /**/
-// INSERT SOMETHING SO THAT PEOPLE KNOW THAT THEY ARE DRINKING
-//  AT THEIR OWN RISK/SHOULD DRINK RESPONSIBLY ETC
 
 // Change relevant button functions
   document.getElementById('settingsContent').innerHTML = settingsHTML;
@@ -204,20 +217,40 @@ function showSettings() {
   document.getElementById('saveSettings').addEventListener('click', saveSettings);
 }
 function saveSettings() {
-  // Gather Team and Player Names in an array
-  var teamNames = document.querySelectorAll('.teamNames');
-  var playerNames = document.querySelectorAll('.playerNames');
-  for(i = 0; i < teamNames.length; i++) {
-    teamNamesArray.push(teamNames[i].value);
+  var drinkingSelect = document.getElementById('drinkingSelect').value;
+  // Check if drinking rules should be enabled
+  if(drinkingSelect == 'Enabled') {
+    drinkRules = true;
+  } else {
+    drinkRules = false;
   }
-  for(i = 0; i < playerNames.length; i++) {
-    playerNamesArray.push(playerNames[i].value);
+  // Insert message of responsibility if drinkRules
+  if(drinkRules) {
+    // insert message, ask if they're sure, if yes start game, if not go back
+    if(window.confirm(drinkResponsibleMessage)) {
+      grabValuesStartGame();
+    } else {
+      return;
+    }
+  } else {
+    grabValuesStartGame();
   }
-  // grab values
+
+
+  function grabValuesStartGame() {
+    // Gather Team and Player Names in an array
+    var teamNames = document.querySelectorAll('.teamNames');
+    var playerNames = document.querySelectorAll('.playerNames');
+    for(i = 0; i < teamNames.length; i++) {
+      teamNamesArray.push(teamNames[i].value);
+    }
+    for(i = 0; i < playerNames.length; i++) {
+      playerNamesArray.push(playerNames[i].value);
+    }
+    // grab values
     let pointsToWinSelect = document.getElementById('pointsToWinSelect').value;
     let timerSelect = document.getElementById('timerSelect').value;
     let passesSelect = document.getElementById('passesSelect').value;
-    let drinkingSelect = document.getElementById('drinkingSelect').value;
     if(document.getElementById('difficultySetting').value == 'Easy') {
       ifEasy = true;
     } else {
@@ -228,12 +261,8 @@ function saveSettings() {
         timer = timerSelect;
         toWin = pointsToWinSelect;
         maximumPasses = passesSelect;
-        // Check if drinking rules should be enabled
-        if(drinkingSelect == 'Enabled') {
-          drinkRules = true;
-        } else {
-          drinkRules = false;
-        }
+
+
         // create team Objects
             for(i=0; i < noOfTeams; i++) {
               var numberOfPlayers = list.children[i].querySelector('div').children.length;
@@ -289,7 +318,8 @@ function saveSettings() {
           hideSettings();
           // Get rid of what's left on the screen and no longer needed event listeners
           clearStuff();
-          addItemBtn.className = 'hidden';
+          addItemBtn.className = 'hideNow';
           readyBtn.removeEventListener("click", showSettings);
           startDaGame();
+        }
 }
