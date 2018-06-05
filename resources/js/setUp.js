@@ -9,6 +9,11 @@ rulesBtn.addEventListener('click', showRules);
 document.getElementById('closeRules').addEventListener('click', hideRules);
 // Add Teams and players
 function addItem() {
+  // Check if it's a mobile and
+  if(((window.innerWidth <= 600) && (noOfTeams == 6)) || noOfTeams == 12) {
+    list.className = 'list_js_media_query';
+  }
+  
   // If ready button is hidden, show it
   // Also change text of add team button
   if(readyBtn.className == 'hideNow') {
@@ -17,30 +22,30 @@ function addItem() {
     document.getElementById('mainTitle').className = 'hideNow';
   }
 
-
-
   noOfTeams += 1;
   noOfPlayers += 2;
   var randNum = ((Math.random() * 9999999999) * (Math.random() * 99999999999));
   var randNumId = randNum + noOfTeams;
   var listItem = document.createElement("li");
-  listItem.innerHTML =
-  `<img class='deleteBtn teamBtn' id='deleteBtn_${randNumId}'
+  listItem.innerHTML = `<img class='deleteBtn teamBtn' id='deleteBtn_${randNumId}'
     src='./resources/images/x_delete_button.png'/>
     <input maxlength="20" class="teamNames" placeholder='Team ${noOfTeams}'>
     </input>
     <div class='playerContainer' id='playerContainer_${randNumId}'>
-    <input maxlength="20" class='playerNames' placeholder='Player 1'/>
-    <input maxlength="20" class='playerNames' placeholder='Player 2'/>
+        <input maxlength="20" class='playerNames' placeholder='Player 1'/>
+        <input maxlength="20" class='playerNames' placeholder='Player 2'/>
     </div>
-    <button class='addPlayerBtn btn'
-    id='addPlayer_${randNumId}'>Add third player</button>`;
+      <button class='addPlayerBtn btn'
+      id='addPlayer_${randNumId}'>+ 3rd player</button>`;
+
+
   document.getElementById('list').appendChild(listItem);
   var buttonDelete = document.getElementById(`deleteBtn_${randNumId}`);
   buttonDelete.addEventListener("click", deleteItem);
   document.getElementById(`addPlayer_${randNumId}`).addEventListener('click', addPlayer);
   nextArrow.addEventListener('click', rulesContentChangeNo2);
 }
+
 function addPlayer() {
   noOfPlayers += 1;
   var id = this.id;
@@ -53,7 +58,7 @@ function addPlayer() {
   var playerContainer = document.getElementById(`${playerContainerId}`);
   playerContainer.appendChild(z);
   this.removeEventListener("click", addPlayer);
-  this.innerHTML = 'Delete Third Player';
+  this.innerHTML = '- 3rd Player';
   this.addEventListener('click', deleteThirdPlayer);
 }
 function deleteThirdPlayer() {
@@ -66,7 +71,7 @@ function deleteThirdPlayer() {
   document.getElementById(`${playerContainerHere}`).removeChild(player3Box.parentNode);
   this.removeEventListener('click', deleteThirdPlayer);
   this.addEventListener('click', addPlayer);
-  this.innerHTML = 'Add Third Player';
+  this.innerHTML = '+ 3rd Player';
 }
 function deleteItem() {
   var item = this.parentNode;
@@ -78,6 +83,10 @@ function deleteItem() {
   if(noOfTeams == 0) {
     readyBtn.className = 'hideNow';
     addItemBtn.innerHTML = 'Begin!';
+    document.getElementById('mainTitle').className = '';
+  }
+  if(noOfTeams == 6 || noOfTeams == 12) {
+    list.className = '';
   }
 }
 function hideSettings() {
@@ -322,4 +331,4 @@ function saveSettings() {
           readyBtn.removeEventListener("click", showSettings);
           startDaGame();
         }
-}
+      }

@@ -346,6 +346,88 @@ li {
 }
 /* End of Buttons */
 
+#list, .list_js_media_query .playerContainer {
+  overflow: scroll;
+}
+.list_js_media_query input{
+  height: 1rem !important;
+}
+.list_js_media_query .deleteBtn {
+  height: 1rem !important;
+  width: 1rem !important;
+}
+.list_js_media_query .addPlayerBtn {
+  height: 2rem;
+  font-size: 1rem;
+}
+
+
+/* Media queries for adding teams screen */
+/* Button media queries */
+@media (max-width: 928px) {
+  .addPlayerBtn {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 928px) {
+  .addPlayerBtn {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 800px) {
+  #list li {
+    margin-bottom: 1rem;
+  }
+  #list input {
+    width: 7rem;
+  }
+}
+@media (max-width: 900px) {
+  .list_js_media_query .playerContainer {
+    overflow: scroll;
+  }
+  .list_js_media_query input{
+    height: 1rem !important;
+  }
+  .list_js_media_query .deleteBtn {
+    height: 1rem !important;
+    width: 1rem !important;
+  }
+  .list_js_media_query .addPlayerBtn {
+    height: 1.5rem;
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  #list {
+    padding-right: 0 1rem;
+  }
+  #list input, #list .deleteBtn {
+    height: 1.2rem !important;
+  }
+  #list, .list_js_media_query .playerContainer {
+    overflow: scroll;
+  }
+  .list_js_media_query input{
+    height: 1rem !important;
+  }
+  .list_js_media_query .deleteBtn {
+    height: 1rem !important;
+    width: 1rem !important;
+  }
+  .list_js_media_query .addPlayerBtn {
+    height: 1.5rem;
+    font-size: 0.7rem;
+  }
+}
+
+
+/* End of adding teams screen media queries */
+
  input {
   background-color: rgba(247, 255, 248, 0.5);
   height: 2rem;
