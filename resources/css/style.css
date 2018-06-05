@@ -1,9 +1,16 @@
 html {
+  /* border-left: 2rem groove #3e0056;
+  border-right: 2rem groove #3e0056; */
+  padding: 1rem 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
   font-size: 16px;
   background-image:
   url('../images/backgroundVerbalise.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 }
 body {
   margin: 0;
@@ -16,10 +23,12 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 /* Main Container */
 #wholeContainer {
   margin: 0;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +37,7 @@ body {
 
 /* Really the logo although it's named title */
 #mainTitle {
-  height: 20rem;
+  /* height: 20rem; */
   width: 20rem;
   padding:0;
   margin:0;
@@ -36,6 +45,8 @@ body {
 
 /*div for game content section */
 #game {
+  height: 100%;
+  width: 100%;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -89,7 +100,7 @@ p {
   top:0;
   right:0;
   padding: 0.5rem;
-  margin: 1rem 1rem 0 0;
+  margin: 3rem 3rem 0 0;
   position: absolute;
   width: 10rem;
   height: 10rem;
@@ -141,16 +152,25 @@ p {
   padding: 1rem 0;
   z-index: 2;
 }
-#rulesContent p, #rulesContent {
+#rulesContent p {
   text-align: center;
-  font-size: 2rem;
+  font-size: 4rem;
+}
+#rulesContent {
+  margin: 0 10rem;
 }
 .rulesAppear {
-  position:absolute;
   z-index: 1;
-  background-image:
-  url('./resources/images/rulesBackground.jpg');
-  width: 60rem;
+  /* background-image:
+  url('../images/rulesBackground.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  height: 85%;
+  width: 80%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 #settingsContent,
 #rulesContent h1, h1, .num, .statsTable th, .btn,
@@ -159,7 +179,12 @@ p {
     'Luckiest Guy', helvetica, sans-serif;
   }
 #rulesContent h1 {
-  font-size: 2rem;
+  text-shadow: 2px 0px 1px #3e0056, 3px 3px 5px blue;
+  font-size: 6rem;
+  color: #f7f700;
+}
+#rulesContent p {
+  font-size: 2.5rem;
 }
 #rulesContent p, #rulesContent li, input {
   font-family:
@@ -167,6 +192,7 @@ p {
 }
 .rulesList li {
   list-style-type: circle;
+  text-align: center;
 }
 #settingsContent {
   text-align: center;
@@ -179,12 +205,12 @@ p {
   max-height: 2rem;
 }
 #rulesContent {
-  padding: 1rem;
+  padding: 3rem 1rem 1rem 1rem;
 }
 .rules-bottom-bar,
 #rules-bottom-bar-right, .settings-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   text-align: center;
 }
@@ -192,10 +218,62 @@ p {
   padding: 0.5rem;
 }
 #rules-bottom-bar-right {
-  width: 5rem;
+  width: 10rem;
+}
+#nextArrow {
+  height: 5rem;
+  width: 10rem;
 }
 .rulesArrows {
   cursor: pointer;
+}
+#rulesContentDivForGreenWords {
+  text-align: center;
+  color: green;
+}
+#rulesContentDivForRedWords {
+  text-align: center;
+  color: #6d0404;
+}
+#alignGreenLeft p, #alignRedLeft p {
+  text-align: left;
+}
+/* Media Queries - rules and Settings */
+@media only screen and (max-width: 1180px) {
+  #rulesContent h1 {
+    font-size: 4rem;
+  }
+  #rulesContent p {
+    font-size: 1.7rem;
+  }
+}
+@media only screen and (max-width: 889px) {
+  #rulesContent h1 {
+    font-size: 3rem;
+  }
+  #rulesContent p {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 720px) {
+  .rulesAppear, #rulesContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #rulesContent {
+    margin: 0;
+    padding: 0 1rem;
+  }
+}
+@media only screen and (max-width: 545px) {
+  #rulesContent {
+    width: 90%;
+  }
+  #rulesContent p {
+    line-height: 1.5;
+  }
 }
 /*End of rules and settings */
 
@@ -214,7 +292,7 @@ li {
   background-color: rgb(234, 93, 11);
   border-radius: 2rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 1rem 0;
   padding: 0.5rem;
   display: flex;
@@ -234,7 +312,7 @@ li {
   transform: scale(1.1);
 }
 .initialBtn {
-  width: 10rem;
+  width: 20rem;
   height: 3rem;
 }
 .deleteBtn, .helpBtn  {

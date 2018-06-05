@@ -14,7 +14,9 @@ function addItem() {
   if(readyBtn.className == 'hideNow') {
     readyBtn.className = 'btn initialBtn';
     addItemBtn.innerHTML = 'Add Another Team';
+    document.getElementById('mainTitle').className = 'hideNow';
   }
+
 
 
   noOfTeams += 1;
@@ -75,12 +77,11 @@ function deleteItem() {
   // Also change wording of add team button
   if(noOfTeams == 0) {
     readyBtn.className = 'hideNow';
-    addItemBtn.innerHTML = 'Get Started';
+    addItemBtn.innerHTML = 'Begin!';
   }
 }
 function hideSettings() {
-  document.getElementById('settings-modal').className = 'hidden';
-  document.getElementById('settings-container').className = 'hidden';
+  document.getElementById('settings-container').className = 'hideNow';
 }
 // Takes message, let's it appear and then it disappears
 function inputErrorMessage(message, containerId, messageBoxId) {
@@ -129,7 +130,6 @@ function showSettings() {
   // Make everything dis/appear
   document.getElementById('game').className = 'hidden';
   list.className = 'hidden';
-  document.getElementById('settings-modal').className = 'settings-modal';
   document.getElementById('settings-container').className = 'modal-container';
 
   // Set all variables necessary for gathering setting info from users
@@ -264,35 +264,35 @@ function saveSettings() {
 
 
         // create team Objects
-            for(i=0; i < noOfTeams; i++) {
-              var numberOfPlayers = list.children[i].querySelector('div').children.length;
-              var specificTeamPlayerNames = [];
-              for(var k=numberOfPlayers - 1; k >= 0; k--) {
-                specificTeamPlayerNames.push(playerNamesArray[k]);
-                playerNamesArray.splice(k, 1);
+          for(i=0; i < noOfTeams; i++) {
+            var numberOfPlayers = list.children[i].querySelector('div').children.length;
+            var specificTeamPlayerNames = [];
+            for(var k=numberOfPlayers - 1; k >= 0; k--) {
+              specificTeamPlayerNames.push(playerNamesArray[k]);
+              playerNamesArray.splice(k, 1);
+            }
+              teamObjectsArray[i] = {
+                name: teamNamesArray[i],
+                players: specificTeamPlayerNames,
+                score: 0,
+                roundsPlayed: 0,
+                passesUsed: 0,
+                position: 1,
+                whichPlayersTurn: 0,
+              };
+            }
+            // Find out which categories are to be used
+            categories = allThemes[themeSelected];
+            // Add and Fill Random Category
+            for(i=0; i<categories.length; i++) {
+              for(var j = 0; j<categories[i].array.length; j++) {
+                randomCategory.array.push(categories[i].array[j]);
               }
-                teamObjectsArray[i] = {
-                  name: teamNamesArray[i],
-                  players: specificTeamPlayerNames,
-                  score: 0,
-                  roundsPlayed: 0,
-                  passesUsed: 0,
-                  position: 1,
-                  whichPlayersTurn: 0,
-                };
+              for(var k = 0; k<categories[i].easyArray.length; k++) {
+                randomCategory.easyArray.push(categories[i].easyArray[k]);
               }
-              // Find out which categories are to be used
-              categories = allThemes[themeSelected];
-              // Add and Fill Random Category
-              for(i=0; i<categories.length; i++) {
-                for(var j = 0; j<categories[i].array.length; j++) {
-                  randomCategory.array.push(categories[i].array[j]);
-                }
-                for(var k = 0; k<categories[i].easyArray.length; k++) {
-                  randomCategory.easyArray.push(categories[i].easyArray[k]);
-                }
-              }
-              categories.push(randomCategory);
+            }
+            categories.push(randomCategory);
               // Push each option in the array of categories into their respective backups
         for(let poop = 0; poop < categories.length; poop++) {
           for(let yo = 0; yo < categories[poop].array.length; yo++) {

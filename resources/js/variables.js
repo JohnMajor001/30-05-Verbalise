@@ -1,6 +1,5 @@
 // NAME: VERBALISE?!!!!
-/* Things to do
-				PRIORITY - REWRITE BAD CODE - cleaned up a bit
+/* To Do
 				SETTINGS AND RULES CSS
 				SMOOTHER TRANSITIONS FOR SET UP
                 Add More Categories + Themes (DISNEY THEME?!)
@@ -69,40 +68,42 @@ var spicyCategories = [];
 var disneyCategories = [];
 var usefulNumber = 0;
 
-var drinkResponsibleMessage = `I know it's no fun but...
-  ...please drink responsibly. Somebody somewhere loves ye!`;
+var drinkResponsibleMessage = `I know it's no fun of me to say but...
+            ...please drink responsibly. Somebody somewhere loves ye!
+            Agreed?`;
 
 // Rules Content
 var rulesNo1 = `<h1>Overview</h1>
-                <p>This game requires a minimum of two teams with 2-3 players on each team.
-                The aim of the game is to get to the finish line first!</p><br />
-                <p>You move forward by describing/correctly guessing the word on the screen,
-                depending on your role at the time.</p>`;
-var rulesNo2 = `<h1>Each Round</h1>
-                <p>Only one team moves during each round.</p><br />
-                <p>A player will be designated the \'describer\' and will race against the clock to
-                 describe the word on the screen to their team mate(s).
-                If the team successfully guesses the word, you can click 'Got it!' and hurry to get the next word!
+                <p>You need at least two teams with 2-3 players on each team.<br /><br />
+                The aim is to get to the finish line first.</p>
+                <br /><p>Simples!</p><br />`;
+var rulesNo2 = `<h1>Each Round...</h1>
+                <p style='color: #6d0404'>Only one team moves at a time.</p>
+                <br />
+                <p>One player from the team will be designated the \'describer\' and will race against the timer to
+                 describe the word on the screen to their team mate(s).</p>`
+var rules2No2 = `<h1>Each Round</h1>
+                <p style='color: #6d0404'>If the team successfully guesses the word, the describer will click the 'Got it!' button and a new word shall appear!
                 </p><br />
-                <p>The more words you successfully describe/guess within the alloted time the
-                higher your team's score and the faster you will reach the finish line!</p><br />`;
-var rulesNo3 = `<h1>The Don'ts</h1>
-                <p>The describer may <strong style='text-decoration: underline;'>NOT</strong></p><br />
-                <ul class='rulesList'>
-                  <li>Say any direct part of the word itself</li>
-                    <ul class='rulesList'>
-                      <li>E.g. you may not describe the word 'fishhook' as 'a tool for hooking fish'</li>
-                    </ul>
-                  <li>Use 'Sounds like', 'Rhymes with' or 'Ends/Starts with'</li>
-                  <li>Use any props or tools</li>
-                </ul>`;
-var rulesNo4 = `<h1>The Do's</h1>
-                  <p>You <strong style='text-decoration: underline;'>MAY</strong></p><br />
-                <ul class='rulesList'>
-                <li>Be as articulate as possible</li>
-                <li>Gesture and point</li>
-                <li>Sing/hum</li>
-                </ul><br />
+                <p>The more words your team successfully describes/guesses within the alloted time the
+                higher your team's score and the faster you will reach the finish line!</p>`;
+var rulesNo3 = `<h1>Don't break DA RULES!</h1>
+                <p>The describer may <strong style='text-decoration: underline; color: red'>NOT...</strong></p><br />
+                <div id='rulesContentDivForRedWords'>
+                  <p>1. Say any direct part of the word itself that you're describing.<br />
+                  E.g. You may not describe the word 'fishhook' as 'a tool for hooking fish</p>
+                  <br />
+                  <p>2. Use 'Sounds like', 'Rhymes with' or 'Ends/Starts with'</p>
+                  <br />
+                  <p>3. Use any writing materials</p>
+                </div>`;
+var rulesNo4 = `<h1>DO DIS YO</h1>
+                <p>You <strong style='text-decoration: underline; color: green'>MAY</strong></p><br />
+                <div id='rulesContentDivForGreenWords'>
+                  <p>1. Gesticulate and point</p><br />
+                  <p>2. Sing/hum</p>
+                </div>
+                <br />
                 <p>Have fun!</p>`;
 
 // Niche Categories

@@ -11,8 +11,7 @@ function showRules() {
   document.getElementById('mainTitle').className = 'hideNow';
   document.getElementById('game').className = 'hideNow';
 
-  document.getElementById('modal').className = 'rulesAppear';
-  document.getElementById('modal-container').className = 'rulesAppear';
+  document.getElementById('rules-container').className = 'rulesAppear';
 
   rulesContent.innerHTML = rulesNo1;
   nextArrow.className = 'rulesArrows';
@@ -21,7 +20,11 @@ function showRules() {
 
 function rulesContentChangeNo2() {
   setRulesContentAndAddListeners(rulesNo2,
-    rulesContentChangeNo2, rulesContentChangeNo3);
+    rulesContentChangeNo2, rulesContentChangeNo2point5);
+}
+function rulesContentChangeNo2point5() {
+  setRulesContentAndAddListeners(rules2No2,
+  rulesContentChangeNo2point5, rulesContentChangeNo3);
 }
 function rulesContentChangeNo3() {
   setRulesContentAndAddListeners(rulesNo3,
@@ -35,8 +38,7 @@ function rulesContentChangeNo4() {
 
 // Hide Rules
 function hideRules() {
-  document.getElementById('modal').className = 'hidden';
-  document.getElementById('modal-container').className = 'initialModal';
+  document.getElementById('rules-container').className = 'hideNow';
   document.getElementById('game').className = '';
   document.getElementById('mainTitle').className = '';
   nextArrow.className = 'rulesArrows';

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Verbalise</title>
   <link type="text/css" rel="stylesheet" href="./resources/css/reset.css">
   <link type="text/css" rel="stylesheet" href="./resources/css/style.css">
@@ -37,46 +38,41 @@
       <img id='mainTitle' src='./resources/images/VerbaliseLogoFinal.png'/>
 
     <!-- Rules -->
-    	<div class="hidden" id='modal'>
-        <div id='modal-container'>
-          	<p id='rulesContent'></p>
-          	<div class='rules-bottom-bar' id='rules-bottom-bar'>
-          		<img src='./resources/images/crossButton.jpg' id='closeRules'/>
-          		<div id='rules-bottom-bar-right'>
-          			<img id='nextArrow' src='./resources/images/nextArrow.png'
-                 alt='An Arrow'/>
-      			</div>
-      		</div>
-      	</div>
+      <div class='hideNow' id='rules-container'>
+        	<div id='rulesContent'></div>
+        	<div class='rules-bottom-bar' id='rules-bottom-bar'>
+        		<img src='./resources/images/x_delete_button.png' id='closeRules'/>
+        		<div id='rules-bottom-bar-right'>
+        			<img id='nextArrow' src='./resources/images/nextArrow.png'
+               alt='An Arrow'/>
+    			  </div>
+    		  </div>
       </div>
 
     <!-- Settings-->
-      <div class="hidden" id='settings-modal'>
-        <div id='settings-container'>
-            <div id='settingsContent'></div>
-            <div class='settings-row'>
-              <img class='deleteBtn' src='./resources/images/crossButton.jpg'
-              id='closeSettings'/>
-              <button class="btn initialBtn" type="button"
-              id="saveSettings">Start!</button>
-            </div>
+    <div class='hideNow' id='settings-container'>
+        <div id='settingsContent'></div>
+        <div class='settings-row'>
+          <img class='deleteBtn' src='./resources/images/x_delete_button.png'
+          id='closeSettings'/>
+          <button class="btn initialBtn" type="button"
+          id="saveSettings">Start!</button>
         </div>
-      </div>
+    </div>
+
 
     <!-- Game Content itself-->
     <div id='game'>
       <button class="btn initialBtn" type="button"
       id="rules">How to Play</button>
       <button class="btn initialBtn" type="button"
-      id="addItemBtn">Get Started</button>
+      id="addItemBtn">Begin!</button>
       <div id='list'></div>
       <input class='hideNow' id="computer" maxlength="4"></input>
-      <button class="hideNow" id="readyBtn">Ready!</button>
-
+      <button class="hideNow" id="readyBtn">Play!</button>
     </div>
     <!-- End of whole container div -->
   </div>
-
 <script src="./resources/js/variables.js"></script>
 <script src='./resources/js/settings.js'></script>
 <script src='./resources/js/rules.js'></script>
