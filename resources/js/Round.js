@@ -99,7 +99,7 @@ function roundBegins() {
 
   readyBtn.innerHTML = 'Got it!';
 
-    var passButtonHtml = `<button class="btn" id='passBtn'>Pass</button>
+    var passButtonHtml = `<button class="btn initialBtn" id='passBtn'>Pass</button>
                           <span class='hidden' id='noMorePassesSpan'>${noMorePassesText}</span>`;
 
   readyBtn.insertAdjacentHTML('afterend', passButtonHtml)
@@ -141,6 +141,9 @@ function roundEnds() {
   currentTeam.passesUsed -= currentTeam.passesUsed;
   // increment position
   currentTeam.position += currentTeam.score;
+  if(currentTeam.roundsPlayed >= 1) {
+  currentTeam.pastPosition += currentTeam.score;
+  }
   // display stats
   var checkPosition = (currentTeam.position - 1)%categories.length;
   var catToUse = categories[checkPosition];
@@ -360,6 +363,9 @@ clearStuff();
   mistakesWereMade.parentNode.removeChild(mistakesWereMade);
   return;
 } else if(teamObjectsArray[0].roundsPlayed === teamObjectsArray[teamObjectsArray.length - 1].roundsPlayed) {
+  // Make sure that animation frame can begin
+  stopFrameNumber -= 4;
+
   // After each team have played a round, show current standings
   // Make sure Grammar is correct
   let roundOrRounds;
@@ -370,18 +376,20 @@ clearStuff();
   }
 
   var currentStandings = document.createElement('div');
-  var currentStandingsFiller = `<h1>After ${teamObjectsArray[0].roundsPlayed} ${roundOrRounds}...</h1>`
+  var currentStandingsFiller =
+  `<h1>After ${teamObjectsArray[0].roundsPlayed} ${roundOrRounds}...</h1>
+  <span>Key:</span>`
   for(i = 0; i < teamObjectsArray.length; i++) {
     let team = teamObjectsArray[i];
-    // Make sure Grammar is correct Again
-    let pointOrPoints;
-    if(team.position - 1 == 1) { pointOrPoints = 'point';} else {
-      pointOrPoints = 'points';
-    };
-    currentStandingsFiller += `<p>Team ${team.name} has ${team.position - 1} ${pointOrPoints}`;
+    currentStandingsFiller +=
+    `<div class='currentStandingsFiller'>
+      <div style='background-color: ${team.color}; height: 2rem; width: 2rem;'></div>
+      <p style='color: ${team.color};'>${team.name}</p>
+    </div>`;
   }
   // What happens when next round is clicked
   function continueToRoundPrep() {
+    stopFrameNumber += 4;
     whichTeamPlays += 1;
     var newTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
     readyBtn.removeEventListener('click', continueToRoundPrep);
@@ -391,6 +399,11 @@ clearStuff();
   readyBtn.addEventListener('click', continueToRoundPrep);
   // button which continues the game
   createElementWithInsides(currentStandingsFiller, currentStandings, list);
+  // ADD Animated board
+  var board = document.createElement('canvas');
+  var txt = 'text';
+  createElementWithInsides(txt, board, list);
+  drawOnCanvas(noOfTeams, teamObjectsArray, toWin);
 } else {
   // If it is neither the end of an entire round nor has the game been won
     whichTeamPlays += 1;

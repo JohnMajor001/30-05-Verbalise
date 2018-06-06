@@ -10,8 +10,14 @@ document.getElementById('closeRules').addEventListener('click', hideRules);
 // Add Teams and players
 function addItem() {
   // Check if it's a mobile and
-  if(((window.innerWidth <= 700) && (noOfTeams == 5)) || noOfTeams == 12) {
+  if(((window.innerWidth <= 700) && (noOfTeams == 5)) || noOfTeams == 8) {
     list.className = 'list_js_media_query';
+  }
+  if(((window.innerWidth <= 400) && (noOfTeams == 8)) || (window.innerWidth < 1500) && noOfTeams >= 12) {
+    list.className = 'list_js_media_query_super';
+  }
+  if((window.innerWidth <= 500) && (noOfTeams >= 8)) {
+    list.className = 'list_js_media_query_super';
   }
 
   // If ready button is hidden, show it
@@ -36,7 +42,7 @@ function addItem() {
         <input maxlength="20" class='playerNames' placeholder='Player 2'/>
     </div>
       <button class='addPlayerBtn btn'
-      id='addPlayer_${randNumId}'>+ 3rd player</button>`;
+      id='addPlayer_${randNumId}'>+ player</button>`;
 
 
   document.getElementById('list').appendChild(listItem);
@@ -58,7 +64,7 @@ function addPlayer() {
   var playerContainer = document.getElementById(`${playerContainerId}`);
   playerContainer.appendChild(z);
   this.removeEventListener("click", addPlayer);
-  this.innerHTML = '- 3rd Player';
+  this.innerHTML = '- player';
   this.addEventListener('click', deleteThirdPlayer);
 }
 function deleteThirdPlayer() {
@@ -71,7 +77,7 @@ function deleteThirdPlayer() {
   document.getElementById(`${playerContainerHere}`).removeChild(player3Box.parentNode);
   this.removeEventListener('click', deleteThirdPlayer);
   this.addEventListener('click', addPlayer);
-  this.innerHTML = '+ 3rd Player';
+  this.innerHTML = '+ player';
 }
 function deleteItem() {
   var item = this.parentNode;
@@ -85,10 +91,15 @@ function deleteItem() {
     addItemBtn.innerHTML = 'Begin!';
     document.getElementById('mainTitle').className = '';
   }
-  if(noOfTeams == 5 || noOfTeams == 12) {
+  // Media queries
+  if(((window.innerWidth <= 700) && (noOfTeams == 5)) || ((window.innerWidth >= 700) && noOfTeams == 8)) {
+    list.className = '';
+  }
+  if((window.innerWidth <= 500) && (noOfTeams < 8)) {
     list.className = '';
   }
 }
+
 function hideSettings() {
   document.getElementById('settings-container').className = 'hideNow';
 }
@@ -137,8 +148,8 @@ function showSettings() {
       }
     }
   // Make everything dis/appear
-  document.getElementById('game').className = 'hidden';
-  list.className = 'hidden';
+  document.getElementById('game').className = 'hideNow';
+  list.className = 'hideNow';
   document.getElementById('settings-container').className = 'modal-container';
 
   // Set all variables necessary for gathering setting info from users
@@ -181,6 +192,7 @@ function showSettings() {
                       <div class='settings-row'>
                         <span>Timer for each Round(seconds)</span>
                         <select id='timerSelect'>
+                          <option value='${five}'>${five}</option>
                           <option value='${thirty}'>${thirty}</option>
                           <option value='${fortyfive}'>${fortyfive}</option>
                           <option value='${sixty}'>${sixty}</option>
@@ -284,9 +296,11 @@ function saveSettings() {
                 name: teamNamesArray[i],
                 players: specificTeamPlayerNames,
                 score: 0,
+                color: arrayOfTeamColours[i],
                 roundsPlayed: 0,
                 passesUsed: 0,
                 position: 1,
+                pastPosition: 1,
                 whichPlayersTurn: 0,
               };
             }

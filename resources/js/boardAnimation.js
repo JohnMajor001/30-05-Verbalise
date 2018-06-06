@@ -1,37 +1,39 @@
-var myCanvas = document.querySelector('canvas');
+function drawOnCanvas(noOfTeams, teamObjectsArray, pointsToWin) {
+  var myCanvas = document.querySelector('canvas');
 myCanvas.height = window.innerHeight;
 myCanvas.width = window.innerWidth;
 var c = myCanvas.getContext('2d');
 
-var arrayOfTeams = [];
+// var arrayOfTeams = [];
 
-var team1 = {
-  position: 400,
-};
-var team2 = {
-  position: 20,
-};
-var team3 = {
-  position: 30,
-};
-var team4 = {
-  position: 40,
-};
-arrayOfTeams.push(team1);
-arrayOfTeams.push(team2);
-arrayOfTeams.push(team3);
-arrayOfTeams.push(team4);
+// var team1 = {
+//   position: 400,
+// };
+// var team2 = {
+//   position: 20,
+// };
+// var team3 = {
+//   position: 30,
+// };
+// var team4 = {
+//   position: 40,
+// };
+// arrayOfTeams.push(team1);
+// arrayOfTeams.push(team2);
+// arrayOfTeams.push(team3);
+// arrayOfTeams.push(team4);
 
-var noOfTeams = 2;
+// var noOfTeams = 2;
 // var teamPosition = 50;
-var pointsToWin = 60;
+// var pointsToWin = 60;
 var piepiece = (Math.PI*2)/pointsToWin;
 var rPie = myCanvas.width/5;
 var xPie = myCanvas.width/2;
 var yPie = myCanvas.height/2;
 var blackCircleR = rPie/3;
-var arrayOfColours = ['red', 'green', 'orange', 'yellow', 'blue'];
-var arrayOfTeamColours = ['purple', 'white', 'black', 'gray', 'blue'];
+var arrayOfColours = ['red', 'green', 'orange', 'yellow', 'blue', 'purple',
+'pink', 'gray'];
+arrayOfColours.length = categories.length;
 var distBetweenParticles = (rPie - blackCircleR)/noOfTeams;
 
 
@@ -56,22 +58,23 @@ function blackCircle() {
 }
 
 // circle constructor
-function Circle(x, y, color, radius, distFromCentre, teamPosition) {
+function Circle(x, y, color, radius, distFromCentre, teamPosition, teamPastPosition) {
       // Ensure particles don't go past finish
       if(teamPosition > pointsToWin) {
         this.teamPosition = pointsToWin;
       } else {
         this.teamPosition = teamPosition;
       }
-
+  this.teamPastPosition = teamPastPosition;
   this.x = x;
   this.y = y;
   this.radius = radius;
   this.color = color;
-  this.radians = Math.PI*2;
+  this.radians = ((Math.PI*2)/pointsToWin)*teamPastPosition;
   this.velocity = 0.02;
   this.distanceFromCentre = {
-        x: blackCircleR + this.radius + distFromCentre + 1, // WILL NEED TO INCREMENT THIS IN ORDER TO GET SPECIFIC DISTANCES FOR TEAMS
+        x: blackCircleR + this.radius + distFromCentre + 1,
+  // WILL NEED TO INCREMENT THIS IN ORDER TO GET SPECIFIC DISTANCES FOR TEAMS
       };
 
   this.angle = piepiece*(this.teamPosition);
@@ -81,12 +84,21 @@ function Circle(x, y, color, radius, distFromCentre, teamPosition) {
   this.xCo = xPie + (Math.sin(this.k)*this.h);
   this.yCo = yPie + (Math.cos(this.k)*this.h);
 
+  // calculate starting position
+  this.SAngle = piepiece*(this.teamPastPosition);
+  this.SSpecTheta = this.SAngle - (piepiece/2);
+  this.sk = (Math.PI/2) - this.SSpecTheta;
+  this.xStart = xPie + (Math.sin(this.sk)*this.h);
+  this.yStart = xPie + (Math.cos(this.sk)*this.h);
+
+
   this.update = () => {
     this.radians += this.velocity;
-    this.x =  x + Math.cos(this.radians) * this.distanceFromCentre.x;
-    this.y =  y + Math.sin(this.radians) * this.distanceFromCentre.x;
+    this.x = x + Math.cos(this.radians) * this.distanceFromCentre.x;
+    this.y = y + Math.sin(this.radians) * this.distanceFromCentre.x;
     this.draw();
   }
+
   this.draw = () => {
     c.beginPath();
     c.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
@@ -108,7 +120,10 @@ function stopParticle(particle, xnum, ynum) {
 }
 
 function animate() {
-    requestAnimationFrame(animate);
+  // Stop animation frame whenever use clicks beyond it
+    if(stopFrameNumber < 5) {
+      requestAnimationFrame(animate);
+    }
     // c.fillStyle = 'rgba(0, 0, 0, 0.05)'; // color is wrong
     c.clearRect(0, 0, myCanvas.width, myCanvas.height);
     for(i=0;i<pointsToWin;i++) {
@@ -187,9 +202,12 @@ var dynamicR = specR*2;
 
 // noOfTeams = number of particles you want
   for(i=0; i<noOfTeams;i++) {
-    particles.push(new Circle(xPie, yPie, arrayOfTeamColours[i], specR, 0+(i*distBetweenParticles), arrayOfTeams[i].position));
+    particles.push(new Circle(xPie, yPie, teamObjectsArray[i].color,
+      specR, 0+(i*distBetweenParticles), teamObjectsArray[i].position,
+      teamObjectsArray[i].pastPosition));
   }
 
 }
 init();
 animate();
+}

@@ -46,6 +46,15 @@ var rulesBtn = document.getElementById('rules');
 var nextArrow = document.getElementById('nextArrow');
 var rulesContent = document.getElementById('rulesContent');
 
+// Canvas animation related
+var stopFrameNumber = 5;
+var arrayOfTeamColours = ['DarkRed','LightGreen','DarkBlue','Gold','DeepPink',
+'DarkSlateGray','Brown', '#fff','MediumPurple','CornflowerBlue','AliceBlue',
+'Black','BlueViolet','Blue','Chartreuse','Crimson','Cyan','DarkGreen',
+'AntiqueWhite','Chocolate','GoldenRod','LightPink','RebeccaPurple','SeaGreen',
+'Violet','Aqua'];
+
+// For clearing the page before adding new content for each screen
 function clearStuff() {
   while(list.firstChild) {
     list.removeChild(list.firstChild);
