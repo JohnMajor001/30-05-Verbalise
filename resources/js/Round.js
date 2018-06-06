@@ -57,7 +57,7 @@ function roundPrep(team) {
   readyBtn.addEventListener('click', countIn);
   var heading = document.createElement('div');
   heading.className = 'roundTextContainer';
-  var body = `<span class='roundText'><t class='teamColor'>${team.name}</t>, it's your round.</span><br />
+  var body = `<span class='roundText'><t style='color: ${team.color}'>${team.name}</t>, it's your round.</span><br />
               <span class='roundText'><t class='describerColor'>
               ${team.players[(team.whichPlayersTurn)%team.players.length]}</t>, you're describing.</span><br />
               <span class='roundText'>Your category is <t class='categoryColor'>${categories[((team.position - 1)%categories.length)].name}</t></span>`;

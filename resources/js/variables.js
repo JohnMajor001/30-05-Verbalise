@@ -48,8 +48,8 @@ var rulesContent = document.getElementById('rulesContent');
 
 // Canvas animation related
 var stopFrameNumber = 5;
-var arrayOfTeamColours = ['DarkRed','LightGreen','DarkBlue','Gold','DeepPink',
-'DarkSlateGray','Brown', '#fff','MediumPurple','CornflowerBlue','AliceBlue',
+var arrayOfTeamColours = ['DarkRed','DarkBlue','Gold','LightGreen','DeepPink',
+'MediumPurple','DarkSlateGray','Brown', '#fff','CornflowerBlue','AliceBlue',
 'Black','BlueViolet','Blue','Chartreuse','Crimson','Cyan','DarkGreen',
 'AntiqueWhite','Chocolate','GoldenRod','LightPink','RebeccaPurple','SeaGreen',
 'Violet','Aqua'];

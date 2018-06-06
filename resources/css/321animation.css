@@ -41,32 +41,7 @@
 	to{transform: scale(4)}
 }
 
-/* Stats Table */
-.statsTable {
-	width: 70%;
-}
-.statsTable th, .finalTable th {
-	min-width: 20rem;
-	font-size: 1.5rem;
-	padding: 0.5rem 1rem;
-	height: 3.5rem;
-}
-.finalTable td {
-	min-width: 20rem;
-}
-.describeText, .statsTable td, .finalTable td, .settings-row span {
-	font-family: 'Architects Daughter', cursive;
-}
-.describeText {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	padding: 1rem;
-	height: 10rem;
-}
-#spanWithWordToDescribe {
-	font-size: 3rem;
-}
+
 /* Final Table */
 .finalTable {
 	width: 100%;

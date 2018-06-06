@@ -1,8 +1,8 @@
 function drawOnCanvas(noOfTeams, teamObjectsArray, pointsToWin) {
   var myCanvas = document.querySelector('canvas');
-myCanvas.height = window.innerHeight;
-myCanvas.width = window.innerWidth;
-var c = myCanvas.getContext('2d');
+  // myCanvas.width = window.innerWidth;
+  // myCanvas.height = window.innerHeight;
+  var c = myCanvas.getContext('2d');
 
 // var arrayOfTeams = [];
 
@@ -27,7 +27,12 @@ var c = myCanvas.getContext('2d');
 // var teamPosition = 50;
 // var pointsToWin = 60;
 var piepiece = (Math.PI*2)/pointsToWin;
-var rPie = myCanvas.width/5;
+if(window.innerWidth < 800) {
+  var rPie = myCanvas.width/4;
+} else {
+  rPie = myCanvas.width/5;
+}
+
 var xPie = myCanvas.width/2;
 var yPie = myCanvas.height/2;
 var blackCircleR = rPie/3;
@@ -71,7 +76,7 @@ function Circle(x, y, color, radius, distFromCentre, teamPosition, teamPastPosit
   this.radius = radius;
   this.color = color;
   this.radians = ((Math.PI*2)/pointsToWin)*teamPastPosition;
-  this.velocity = 0.02;
+  this.velocity = 0.002;
   this.distanceFromCentre = {
         x: blackCircleR + this.radius + distFromCentre + 1,
   // WILL NEED TO INCREMENT THIS IN ORDER TO GET SPECIFIC DISTANCES FOR TEAMS
