@@ -63,7 +63,7 @@ canvas {
   margin: 2rem 0;
   font-size: 2rem;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -98,6 +98,9 @@ p {
 /* For when we want to immediately hide something */
 .hideNow {
   display: none !important;
+  position: absolute !important;
+  top: 0;
+  margin-top: -500rem;
 }
 
 /* Error messages */
@@ -295,6 +298,9 @@ p {
   }
 }
 @media only screen and (max-width: 545px) {
+  #list {
+    height: 100%;
+  }
   #rulesContent {
     width: 90%;
   }
