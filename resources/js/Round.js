@@ -219,9 +219,11 @@ function roundEnds() {
 }
 function showBoard() {
   readyBtn.removeEventListener('click', showBoard);
-  var mistakesWereMade = document.getElementById('passBtn');
-  mistakesWereMade.removeEventListener('click', mistakes);
-  mistakesWereMade.parentNode.removeChild(mistakesWereMade);
+  if(document.getElementById('passBtn')) {
+    let mistakesWereMade = document.getElementById('passBtn');
+    mistakesWereMade.removeEventListener('click', mistakes);
+    mistakesWereMade.parentNode.removeChild(mistakesWereMade);
+  }
   clearStuff();
 
   // Make sure that animation frame can begin
@@ -243,7 +245,7 @@ function showBoard() {
     currentStandingsFiller +=
     `<div class='currentStandingsFiller'>
       <div style='background-color: ${team.color}; height: 2rem; width: 2rem;'></div>
-      <p style='color: ${team.color};'>${team.name}</p>
+      <p style='color: ${team.color};'>${team.name} ${team.position - 1}</p>
     </div>`;
   }
   createElementWithInsides(currentStandingsFiller, currentStandings, list);
@@ -254,11 +256,11 @@ function showBoard() {
 // MEDIA QUERIES MUST BE SET HERE SO THAT BOARD DOES NOT APPEAR PIXELATED
   // For Mac
   if (window.innerWidth >= 2400) {
-    board.width = window.innerWidth/2.6;
+    board.width = window.innerWidth/3;
     board.height = board.width;
 
   } else if ((window.innerWidth < 2400) && (window.innerWidth >= 1300)) {
-    board.width = window.innerWidth/2.9;
+    board.width = window.innerWidth/3.5;
     board.height = board.width;
 
   } else if ((window.innerWidth < 1300) && (window.innerWidth >= 800)) {
@@ -288,7 +290,7 @@ function showBoard() {
   drawOnCanvas(noOfTeams, teamObjectsArray, toWin);
 }
 function mistakes() { // THIS CAUSES BUGS!!!
-  readyBtn.className = 'hidden';
+  readyBtn.className = 'hideNow';
   var mistakesWereMade = document.getElementById('passBtn');
   mistakesWereMade.removeEventListener('click', mistakes);
   mistakesWereMade.innerHTML = 'Back';
@@ -315,8 +317,7 @@ function mistakes() { // THIS CAUSES BUGS!!!
                       <img class='helpBtn' id='helpContentNextArrow' src='./resources/images/nextArrow.png'/>
                     </div>
                     <span>${helpContentEndMessage}</span>`;
-  helpContentDiv.innerHTML = helpContent;
-  list.appendChild(helpContentDiv);
+  createElementWithInsides(helpContent, helpContentDiv, list)
                       // Create a back Button
   document.getElementById('helpContentPrevArrow').addEventListener('click', decrement);
   document.getElementById('helpContentNextArrow').addEventListener('click', increment);
@@ -325,7 +326,7 @@ function mistakes() { // THIS CAUSES BUGS!!!
 
 function back() {
   let passesAllGone = document.getElementById('noMorePassesSpan');
-  passesAllGone.className = 'hidden';
+  passesAllGone.className = 'hideNow';
   passesAllGone.innerHTML = noMorePassesText;
 
   var currentTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
@@ -337,6 +338,7 @@ function back() {
   document.getElementById('helpContentNextArrow').removeEventListener('click', increment);
   var mistakesWereMade = document.getElementById('passBtn');
   mistakesWereMade.removeEventListener('click', back);
+  mistakesWereMade.addEventListener('click', passed);
   readyBtn.className = 'btn initialBtn';
   usefulNumber -= usefulNumber;
   roundEnds();

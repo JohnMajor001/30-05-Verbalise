@@ -50,7 +50,7 @@ var rulesContent = document.getElementById('rulesContent');
 var stopFrameNumber = 5;
 var arrayOfTeamColours = ['DarkRed','DarkBlue','Gold','LightGreen','DeepPink',
 'MediumPurple','DarkSlateGray','Brown', '#fff','CornflowerBlue','AliceBlue',
-'Black','BlueViolet','Blue','Chartreuse','Crimson','Cyan','DarkGreen',
+'BlueViolet','Blue','Chartreuse','Crimson','Cyan','DarkGreen',
 'AntiqueWhite','Chocolate','GoldenRod','LightPink','RebeccaPurple','SeaGreen',
 'Violet','Aqua'];
 
