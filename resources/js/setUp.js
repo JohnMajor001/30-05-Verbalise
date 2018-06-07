@@ -1,4 +1,3 @@
-
 // add Item button can add children
 addItemBtn.addEventListener("click", addItem);
 // getting team names as long as more than 2 are created
@@ -190,7 +189,7 @@ function showSettings() {
                         </select>
                       </div>
                       <div class='settings-row'>
-                        <span>Timer for each Round(seconds)</span>
+                        <span>Timer(seconds)</span>
                         <select id='timerSelect'>
                           <option value='${five}'>${five}</option>
                           <option value='${thirty}'>${thirty}</option>
@@ -210,7 +209,7 @@ function showSettings() {
                         </select>
                       </div>
                       <div class='settings-row'>
-                        <span>Drinking Rules?</span>
+                        <span>Drinking?</span>
                         <select id='drinkingSelect'>
                           <option value='Disabled'>Not Today</option>
                           <option value='Enabled'>Yes, baby!</option>
@@ -224,7 +223,7 @@ function showSettings() {
                         </select>
                       </div>
                       <div class='settings-row'>
-                        <span>Choose your theme</span>
+                        <span>Theme</span>
                         <select id='themes'>
                           <option value='${zero}'>Standard</option>
                           <option value='${one}'>Spicy</option>

@@ -60,7 +60,8 @@ function roundPrep(team) {
   var body = `<span class='roundText'><t style='color: ${team.color}'>${team.name}</t>, it's your round.</span><br />
               <span class='roundText'><t class='describerColor'>
               ${team.players[(team.whichPlayersTurn)%team.players.length]}</t>, you're describing.</span><br />
-              <span class='roundText'>Your category is <t class='categoryColor'>${categories[((team.position - 1)%categories.length)].name}</t></span>`;
+              <span class='roundText'>Your category is <t class='categoryColor'>${categories[((team.position - 1)%categories.length)].name}</t></span>
+              <br /><span class='roundText>MAKE SURE YOUR TEAMMATES CAN'T SEE THE SCREEN!</span>`;
   heading.innerHTML = body;
   list.appendChild(heading);
   if(document.getElementById('passBtn')) {
@@ -133,6 +134,16 @@ function roundBegins() {
     setTimeout(stopUpdating, timeLength);
 }
 function roundEnds() {
+  // check if an entire round has ended
+  var checkIfAllRoundsAreEqual = 0;
+  for(i=0; i<teamObjectsArray.length; i++) {
+    if(teamObjectsArray[0].roundsPlayed == teamObjectsArray[i].roundsPlayed) {
+      checkIfAllRoundsAreEqual++;
+    }
+  }
+  if((checkIfAllRoundsAreEqual == teamObjectsArray.length) && (teamObjectsArray[0].roundsPlayed > 0)) {
+    anotherRoundPlayed = true;
+  }
      //clear Board
   clearStuff();
   rulesBtn.className = 'btn initialBtn';
@@ -199,14 +210,84 @@ function roundEnds() {
     mistakesWereMade.addEventListener('click', mistakes);
     mistakesWereMade.innerHTML = 'Help';
 
-    readyBtn.innerHTML = 'Next Round';
+    readyBtn.innerHTML = 'Continue';
     setTimeout(function() {
-      readyBtn.addEventListener('click', leadToRoundPrep);
+      readyBtn.addEventListener('click', showBoard); // leadToRoundPrep
     }, 1000);
-      // LATER ON Create button for editing in case mistakes/cheating
+
       return;
 }
-function mistakes() {
+function showBoard() {
+  readyBtn.removeEventListener('click', showBoard);
+  var mistakesWereMade = document.getElementById('passBtn');
+  mistakesWereMade.removeEventListener('click', mistakes);
+  mistakesWereMade.parentNode.removeChild(mistakesWereMade);
+  clearStuff();
+
+  // Make sure that animation frame can begin
+  stopFrameNumber -= 4;
+
+  // After each team have played a round, show current standings
+  // Make sure Grammar is correct
+  let roundOrRounds;
+  if(teamObjectsArray[0].roundsPlayed == 1) {
+    roundOrRounds = 'round';
+  } else {
+    roundOrRounds = 'rounds';
+  }
+  var currentStandings = document.createElement('div');
+  var currentStandingsFiller =
+  `<span>Key:</span>`
+  for(i = 0; i < teamObjectsArray.length; i++) {
+    let team = teamObjectsArray[i];
+    currentStandingsFiller +=
+    `<div class='currentStandingsFiller'>
+      <div style='background-color: ${team.color}; height: 2rem; width: 2rem;'></div>
+      <p style='color: ${team.color};'>${team.name}</p>
+    </div>`;
+  }
+  createElementWithInsides(currentStandingsFiller, currentStandings, list);
+
+  // ADD Animated board
+  var board = document.createElement('canvas');
+
+// MEDIA QUERIES MUST BE SET HERE SO THAT BOARD DOES NOT APPEAR PIXELATED
+  // For Mac
+  if (window.innerWidth >= 2400) {
+    board.width = window.innerWidth/2.6;
+    board.height = board.width;
+
+  } else if ((window.innerWidth < 2400) && (window.innerWidth >= 1300)) {
+    board.width = window.innerWidth/2.9;
+    board.height = board.width;
+
+  } else if ((window.innerWidth < 1300) && (window.innerWidth >= 800)) {
+    board.width = window.innerWidth/2.3;
+    board.height = board.width;
+
+  } else if ((window.innerWidth < 800) && (window.innerWidth >= 500)) {
+    board.width = window.innerWidth/1.6;
+    board.height = board.width;
+
+    // For Phones
+  } else if (window.innerWidth < 500) {
+      board.width = window.innerWidth;
+      board.height = board.width;
+  }
+
+
+
+  var txt = 'text';
+  createElementWithInsides(txt, board, list);
+  list.style.height = '100%';
+  list.style.backgroundColor = 'black';
+
+  // Add Event Listeners
+  readyBtn.addEventListener('click', leadToRoundPrep);
+
+  drawOnCanvas(noOfTeams, teamObjectsArray, toWin);
+}
+function mistakes() { // THIS CAUSES BUGS!!!
   readyBtn.className = 'hidden';
   var mistakesWereMade = document.getElementById('passBtn');
   mistakesWereMade.removeEventListener('click', mistakes);
@@ -241,6 +322,7 @@ function mistakes() {
   document.getElementById('helpContentNextArrow').addEventListener('click', increment);
   mistakesWereMade.addEventListener('click', back);
 }
+
 function back() {
   let passesAllGone = document.getElementById('noMorePassesSpan');
   passesAllGone.className = 'hidden';
@@ -259,6 +341,7 @@ function back() {
   usefulNumber -= usefulNumber;
   roundEnds();
 }
+
 function decrement() {
 // document.getElementById('numberToChange').innerHTML;
   if(usefulNumber == 0) {
@@ -315,6 +398,7 @@ function passed() {
   }
 }
 function leadToRoundPrep() {
+  list.style.backgroundColor = 'rgba(0, 0, 0, 0)';
   //clear Board
 clearStuff();
   // empty wordsSuccessfullyDescribed array
@@ -361,34 +445,30 @@ clearStuff();
   readyBtn.innerHTML = 'Home';
   var mistakesWereMade = document.getElementById('passBtn');
   mistakesWereMade.parentNode.removeChild(mistakesWereMade);
+
   return;
-} else if(teamObjectsArray[0].roundsPlayed === teamObjectsArray[teamObjectsArray.length - 1].roundsPlayed) {
-  // Make sure that animation frame can begin
-  stopFrameNumber -= 4;
+} else { // If no one has won, do this...
+  // Add and Fill Random Category
+ categories.pop();
+ randomCategory = {
+     name: 'Random',
+     array: [],
+     backUpArray: [],
+     easyArray: [],
+     easyBackUpArray: [],
+   };
+   for(i=0; i<categories.length; i++) {
+     for(var j = 0; j<categories[i].array.length; j++) {
+       randomCategory.array.push(categories[i].array[j]);
+     }
+     for(var k = 0; k<categories[i].easyArray.length; k++) {
+       randomCategory.easyArray.push(categories[i].easyArray[k]);
+     }
+   }
+   categories.push(randomCategory);
 
-  // After each team have played a round, show current standings
-  // Make sure Grammar is correct
-  let roundOrRounds;
-  if(teamObjectsArray[0].roundsPlayed == 1) {
-    roundOrRounds = 'round';
-  } else {
-    roundOrRounds = 'rounds';
-  }
-
-  var currentStandings = document.createElement('div');
-  var currentStandingsFiller =
-  `<h1>After ${teamObjectsArray[0].roundsPlayed} ${roundOrRounds}...</h1>
-  <span>Key:</span>`
-  for(i = 0; i < teamObjectsArray.length; i++) {
-    let team = teamObjectsArray[i];
-    currentStandingsFiller +=
-    `<div class='currentStandingsFiller'>
-      <div style='background-color: ${team.color}; height: 2rem; width: 2rem;'></div>
-      <p style='color: ${team.color};'>${team.name}</p>
-    </div>`;
-  }
-  // What happens when next round is clicked
   function continueToRoundPrep() {
+    list.style.height = 'auto';
     stopFrameNumber += 4;
     whichTeamPlays += 1;
     var newTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
@@ -396,58 +476,16 @@ clearStuff();
     clearStuff();
     roundPrep(newTeam);
   }
-  readyBtn.addEventListener('click', continueToRoundPrep);
+  continueToRoundPrep();
   // button which continues the game
-  createElementWithInsides(currentStandingsFiller, currentStandings, list);
-  // ADD Animated board
-  var board = document.createElement('canvas');
-  var txt = 'text';
-  createElementWithInsides(txt, board, list);
-  drawOnCanvas(noOfTeams, teamObjectsArray, toWin);
-} else {
+
   // If it is neither the end of an entire round nor has the game been won
-    whichTeamPlays += 1;
-    var newTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
-    roundPrep(newTeam);
+    // whichTeamPlays += 1;
+    // var newTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
+    // roundPrep(newTeam);
   }
-   // Add and Fill Random Category
-  categories.pop();
-  randomCategory = {
-      name: 'Random',
-      array: [],
-      backUpArray: [],
-      easyArray: [],
-      easyBackUpArray: [],
-    };
-    for(i=0; i<categories.length; i++) {
-      for(var j = 0; j<categories[i].array.length; j++) {
-        randomCategory.array.push(categories[i].array[j]);
-      }
-      for(var k = 0; k<categories[i].easyArray.length; k++) {
-        randomCategory.easyArray.push(categories[i].easyArray[k]);
-      }
-    }
-    categories.push(randomCategory);
+
 }
 function homePage() {
-  clearStuff();
-  readyBtn.innerHTML = 'Ready!';
-  addItemBtn.className = 'btn initialBtn';
-  // addItemBtn.addEventListener("click", addItem); - may not be necessary if we only hid this earlier
-  readyBtn.addEventListener("click", grabTeamNames);
-  // rulesBtn.addEventListener('click', showRules); - think button is always there and has event listener still
-  // document.getElementById('closeRules').addEventListener('click', hideRules); if above is not necessary than neither is this
-  // May need to put entire game in div? Might be a good idea anyway - may not be necessary if we only hid this earlier
-  // alert('Yeah this doesn\'t do anything either');
-  // alert('You should fix that');
-
-  /*noOfTeams -= noOfTeams;
-  noOfPlayers -= noOfPlayers;
-  teamNamesArray.length = 0;
-  playerNamesArray.length = 0;
-  teamObjectsArray.length = 0;
-  whichTeamPlays -= whichTeamPlays;
-  // reset game*/
-
    location.reload();      // A Bad, short-term solution
   }
