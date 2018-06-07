@@ -8,7 +8,7 @@ rulesBtn.addEventListener('click', showRules);
 document.getElementById('closeRules').addEventListener('click', hideRules);
 // Add Teams and players
 function addItem() {
-  // Check if it's a mobile and
+  // Media Queries for having a certain number of teams
   if(((window.innerWidth <= 700) && (noOfTeams == 5)) || noOfTeams == 8) {
     list.className = 'list_js_media_query';
   }
@@ -29,74 +29,65 @@ function addItem() {
 
   noOfTeams += 1;
   noOfPlayers += 2;
-  var randNum = ((Math.random() * 9999999999) * (Math.random() * 99999999999));
-  var randNumId = randNum + noOfTeams;
   var listItem = document.createElement("li");
-  listItem.innerHTML = `<img class='deleteBtn teamBtn' id='deleteBtn_${randNumId}'
-    src='./resources/images/x_delete_button.png'/>
+  listItem.innerHTML =
+    `<img class='deleteBtn teamBtn' onclick="deleteItem(this)"
+      src='./resources/images/x_delete_button.png'/>
     <input maxlength="20" class="teamNames" placeholder='Team ${noOfTeams}'>
     </input>
-    <div class='playerContainer' id='playerContainer_${randNumId}'>
+    <div class='playerContainer'>
         <input maxlength="20" class='playerNames' placeholder='Player 1'/>
         <input maxlength="20" class='playerNames' placeholder='Player 2'/>
     </div>
       <button class='addPlayerBtn btn'
-      id='addPlayer_${randNumId}'>+ player</button>`;
+        onclick='addPlayer(this)'>+ player</button>`;
 
-
-  document.getElementById('list').appendChild(listItem);
-  var buttonDelete = document.getElementById(`deleteBtn_${randNumId}`);
-  buttonDelete.addEventListener("click", deleteItem);
-  document.getElementById(`addPlayer_${randNumId}`).addEventListener('click', addPlayer);
-  nextArrow.addEventListener('click', rulesContentChangeNo2);
+  list.appendChild(listItem);
 }
 
-function addPlayer() {
-  noOfPlayers += 1;
-  var id = this.id;
-  var nOsInId = id.substring(10, id.length);
-  var playerContainerId = 'playerContainer_' + nOsInId;
-  var player3Id = 'player3Id' + nOsInId;
-  var z = document.createElement('li');
-  var text = `<input maxlength="20" class='playerNames' id='${player3Id}' placeholder='Player 3'/>`;
-  z.innerHTML = text;
-  var playerContainer = document.getElementById(`${playerContainerId}`);
-  playerContainer.appendChild(z);
-  this.removeEventListener("click", addPlayer);
-  this.innerHTML = '- player';
-  this.addEventListener('click', deleteThirdPlayer);
-}
-function deleteThirdPlayer() {
-  noOfPlayers -=1;
-  var identity = this.id;
-  var identityNos = identity.substring(10, this.id.length);
-  var player3Identity = 'player3Id' + identityNos;
-  var player3Box = document.getElementById(`${player3Identity}`);
-  var playerContainerHere = 'playerContainer_' + identityNos;
-  document.getElementById(`${playerContainerHere}`).removeChild(player3Box.parentNode);
-  this.removeEventListener('click', deleteThirdPlayer);
-  this.addEventListener('click', addPlayer);
-  this.innerHTML = '+ player';
-}
-function deleteItem() {
-  var item = this.parentNode;
-  document.getElementById('list').removeChild(item);
+function deleteItem(x) {
+  x.parentElement.parentNode.removeChild(x.parentElement);
   noOfTeams -= 1;
 
   // if you end up with no teams, hide ready button
   // Also change wording of add team button
-  if(noOfTeams == 0) {
+  if (noOfTeams == 0) {
     readyBtn.className = 'hideNow';
     addItemBtn.innerHTML = 'Begin!';
     document.getElementById('mainTitle').className = '';
   }
   // Media queries
-  if(((window.innerWidth <= 700) && (noOfTeams == 5)) || ((window.innerWidth >= 700) && noOfTeams == 8)) {
+  if (((window.innerWidth <= 700) && (noOfTeams == 5)) || ((window.innerWidth >= 700) && noOfTeams == 8)) {
     list.className = '';
   }
-  if((window.innerWidth <= 500) && (noOfTeams < 8)) {
+  if ((window.innerWidth <= 500) && (noOfTeams < 8)) {
     list.className = '';
   }
+}
+
+function addPlayer(x) {
+  var text =
+        `<input maxlength="20"
+        class='playerNames thirdPlayer' placeholder='Player 3'/>`;
+  let pContainer = x.parentElement.querySelector('.playerContainer');
+  pContainer.insertAdjacentHTML('beforeend', text);
+  noOfPlayers += 1;
+
+  // Make this disappear
+  x.style.display = 'none';
+
+  // Create new button with delete third player event listener
+  let newButton = `<button class='deletePlayerBtn btn'
+    onclick='deleteThirdPlayer(this)'>- player</button>`
+  x.parentElement.insertAdjacentHTML('beforeend', newButton);
+}
+function deleteThirdPlayer(x) {
+  noOfPlayers -=1;
+  x.style.display = 'none';
+  let oldButton = x.parentElement.querySelector('.addPlayerBtn');
+  oldButton.style.display = 'block';
+  let inputPlayerToDelete = x.parentElement.querySelector('.thirdPlayer');
+  x.parentElement.querySelector('.playerContainer').removeChild(inputPlayerToDelete);
 }
 
 function hideSettings() {

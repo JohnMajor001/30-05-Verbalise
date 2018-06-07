@@ -244,11 +244,11 @@ function showBoard() {
     let team = teamObjectsArray[i];
     currentStandingsFiller +=
     `<div class='currentStandingsFiller'>
-      <div style='background-color: ${team.color}; height: 2rem; width: 2rem;'></div>
-      <p style='color: ${team.color};'>${team.name} ${team.position - 1}</p>
+      <div style='background-color: ${team.color}; height: 2rem;
+       width: 2rem; borderRadius: 50%;'></div>
+      <p style='color: ${team.color};'> ${team.name}, points:${team.position - 1}</p>
     </div>`;
   }
-  createElementWithInsides(currentStandingsFiller, currentStandings, list);
 
   // ADD Animated board
   var board = document.createElement('canvas');
@@ -277,12 +277,11 @@ function showBoard() {
       board.height = board.width;
   }
 
-
-
   var txt = 'text';
   createElementWithInsides(txt, board, list);
   list.style.height = '100%';
   list.style.backgroundColor = 'black';
+  createElementWithInsides(currentStandingsFiller, currentStandings, list);
 
   // Add Event Listeners
   readyBtn.addEventListener('click', leadToRoundPrep);
@@ -306,10 +305,11 @@ function mistakes() { // THIS CAUSES BUGS!!!
   helpContentDiv.id = 'helpContentID';
   usefulNumber += wordsSuccessfullyDescribed.length;
   let helpContent = `<h1>HELP</h1>
-                    <div>
+                    <div class='helpText'>
                         <span>YOU:Last round, I "accidentally" clicked 'Got it!' too many times...</span><br />
                         <span>ME: *sigh* Use the box below to take away the points you undeservedly gave your team.</span><br />
-                        <span>It will contain the number of points you move forward so leave the number at what your score SHOULD have been and then click back.</span>
+                        <span>It will contain the number of points you move forward.</span><br />
+                        <span>Leave the number at what your score SHOULD have been and then click back.</span>
                     </div>
                     <span id='numberToChange'>${usefulNumber}</span>
                     <div>
