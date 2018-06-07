@@ -20,8 +20,6 @@ function drawPieSlice(c,centerX, centerY, radius, startAngle, endAngle, color ){
   c.fillStyle = color;
   c.beginPath();
   c.moveTo(centerX,centerY);
-  // c.font = 'italic 7pt Calibri, sans-serif';
-  // c.fillText('Hello World!', centerX, centerY);
   c.arc(centerX, centerY, radius, startAngle, endAngle);
   c.closePath();
   c.fill();

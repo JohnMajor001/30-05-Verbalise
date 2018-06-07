@@ -182,18 +182,29 @@ function roundEnds() {
     table.innerHTML = stats;
     list.appendChild(table);
   // Change buttons
+
+  // If drinking rules have been enabled, do the following
   if(drinkRules) {
     var drinkDiv = document.createElement('div');
     drinkDiv.className = 'drinkTextBox';
+
+    // If the team didn't score anything at all
     if(wordsSuccessfullyDescribed.length == 0) {
-      var drinkDivContent = `<h1>NOOBS</h1>
-                            <p><span class='teamColor'>${currentTeam.name}</span> take 3 drinks each for that abysmal performance.<br /><br />Trouts</p>`;
+      var drinkDivContent =
+       `<h1>NOOBS</h1>
+        <p>
+        <span class='teamColor'>${currentTeam.name}</span>
+         take 3 drinks each for that abysmal performance.
+        <br /><br />Trouts</p>`;
+
+    // If the team DID score
     } else {
       let randoNumero = Math.floor(Math.random() * tempDrinkingRules.length);
       var randomDrinkLine = tempDrinkingRules[randoNumero];
        var drinkDivContent = `<h1>Pints Pints Pints</h1>
-                            <p>${currentTeam.name} give out ${wordsSuccessfullyDescribed.length} drink(s) for each item you successfully descibed.</p>
-                            <p> Also<br />${randomDrinkLine}</p>`;
+      <p>${currentTeam.name} give out ${wordsSuccessfullyDescribed.length} drink(s) for each item you successfully descibed.</p>
+      <p> Also<br />${randomDrinkLine}</p>`;
+
       var indexOfDrinkLine = tempDrinkingRules.indexOf(randomDrinkLine);
       tempDrinkingRules.splice(indexOfDrinkLine, 1);
 
@@ -205,25 +216,29 @@ function roundEnds() {
     }
     createElementWithInsides(drinkDivContent, drinkDiv, list);
   }
-    var mistakesWereMade = document.getElementById('passBtn');
-    mistakesWereMade.removeEventListener('click', passed);
-    mistakesWereMade.addEventListener('click', mistakes);
-    mistakesWereMade.innerHTML = 'Help';
+  var mistakesWereMade = document.getElementById('passBtn');
+  mistakesWereMade.removeEventListener('click', passed);
+  mistakesWereMade.addEventListener('click', mistakes);
+  mistakesWereMade.innerHTML = 'Help';
 
-    readyBtn.innerHTML = 'Continue';
-    setTimeout(function() {
-      readyBtn.addEventListener('click', showBoard); // leadToRoundPrep
-    }, 1000);
+  readyBtn.innerHTML = 'Continue';
+  setTimeout(function() {
+    readyBtn.addEventListener('click', showBoard); // leadToRoundPrep
+  }, 700);
 
-      return;
+  return;
 }
+
 function showBoard() {
   readyBtn.removeEventListener('click', showBoard);
+
+  // Not sure why mistakesWereMade doesn't exist sometimes but meh
   if(document.getElementById('passBtn')) {
     let mistakesWereMade = document.getElementById('passBtn');
     mistakesWereMade.removeEventListener('click', mistakes);
     mistakesWereMade.parentNode.removeChild(mistakesWereMade);
   }
+  
   clearStuff();
 
   // Make sure that animation frame can begin
@@ -410,6 +425,8 @@ clearStuff();
   currentTeam.roundsPlayed += 1;
   wordsSuccessfullyDescribed.length = 0;
   readyBtn.removeEventListener('click', leadToRoundPrep);
+
+  // If The team has won do this...
   if(currentTeam.position - 1 >= toWin) {
     /* checks if Team won and if so
                   creates final page with breakdown of game stats,
@@ -421,7 +438,6 @@ clearStuff();
     winners.className = 'winnersText';
     var winnersText = `<h1>And the Winners are...</h1>
                         <h1>${currentTeam.name}!</h1>`;
-    winners.innerHTML = winnersText;
     var statsTableElement = document.createElement('table');
     statsTableElement.className = 'finalTable';
     var finalTable = `<tr>
@@ -438,9 +454,8 @@ clearStuff();
                           <td>${numberFixed}</td>
                         </tr>`;
       }
-      statsTableElement.innerHTML = finalTable;
-      list.appendChild(winners);
-      list.appendChild(statsTableElement);
+      createElementWithInsides(winnersText, winners, list);
+      createElementWithInsides(finalTable, statsTableElement, list);
 
   readyBtn.removeEventListener('click', gotIt);
   readyBtn.addEventListener('click', homePage);
@@ -479,15 +494,10 @@ clearStuff();
     roundPrep(newTeam);
   }
   continueToRoundPrep();
-  // button which continues the game
-
-  // If it is neither the end of an entire round nor has the game been won
-    // whichTeamPlays += 1;
-    // var newTeam = teamObjectsArray[whichTeamPlays%teamObjectsArray.length];
-    // roundPrep(newTeam);
   }
 
 }
+
 function homePage() {
    location.reload();      // A Bad, short-term solution
   }

@@ -217,10 +217,10 @@ function showSettings() {
                         <span>Theme</span>
                         <select id='themes'>
                           <option value='${zero}'>Standard</option>
-                          <option value='${one}'>Spicy</option>
+
                         </select>
                       </div>`;
-                      /**/
+                      /*// <option value='${one}'>Spicy</option>*/
 
 // Change relevant button functions
   document.getElementById('settingsContent').innerHTML = settingsHTML;

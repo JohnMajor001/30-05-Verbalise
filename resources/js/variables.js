@@ -83,7 +83,7 @@ var drinkResponsibleMessage = `I know it's no fun of me to say but...
 
 // Rules Content
 var rulesNo1 = `<h1>Overview</h1>
-                <p>You need at least two teams with 2-3 players on each team.<br /><br />
+                <p>You need at least 2 teams with 2-3 players on each team.<br /><br />
                 The aim is to get to the finish line first.</p>
                 <br /><p>Simples!</p><br />`;
 var rulesNo2 = `<h1>Each Round...</h1>
@@ -100,7 +100,7 @@ var rulesNo3 = `<h1>Don't break DA RULES!</h1>
                 <p>The describer may <strong style='text-decoration: underline; color: red'>NOT...</strong></p><br />
                 <div id='rulesContentDivForRedWords'>
                   <p>1. Say any direct part of the word itself that you're describing.<br />
-                  E.g. You may not describe the word 'fishhook' as 'a tool for hooking fish</p>
+                  E.g. You may not describe the word 'fishhook' as 'a tool for hooking fish'</p>
                   <br />
                   <p>2. Use 'Sounds like', 'Rhymes with' or 'Ends/Starts with'</p>
                   <br />
@@ -670,7 +670,7 @@ var tempDrinkingRules = ['Describer, if anything you described is in the room wi
           believing in santa. Whoever stopped the latest is the only person who does NOT have to drink because the magic of childhood
           is something to be cherished. (Also, they\'re a definite paedophile and shall be referred to as such for the rest of the game.
           Anyone who breaks this rule must drink, close their eyes and click their heels together three times while saying there\'s no place like home)`,
-          'ALL males in the room must argue about who has the biggest penis. Then all of you drink because, just like in real life, no one cares',
+          'ALL males playing the game must argue about who has the biggest penis. Then all of you drink because, just like in real life, no one cares',
           'Drink if you have a fear of the dark.', 'Drink if you\'ve ever pissed yourself from being too drunk', 'Kill yourself. Whoever doesn\'t has to drink',
           `Describer goes on facebook, the first picture of a woman they see everyone must rate out of 10 (because #patriarchy)
            - whoever rates them the highest must drink for having low standards. Everyone, be honest.`, 'Describer, lick the face of the person opposite you. That person must drink.',
@@ -709,17 +709,8 @@ standardCategories.push(nature);
 standardCategories.push(places);
 standardCategories.push(miscellaneous);
 standardCategories.push(person);
-/* This is for making the random Category but do we really want a scenario where people may be describing the same thing again and again?
-Repopulate Each round?
-for(i=0; i<standardCategories.length; i++) {
-  for(var j = 0; j<standardCategories[i].array.length; j++) {
-    randomCategory.array.push(standardCategories[i].array[j]);
-  }
-  for(var k = 0; k<standardCategories[i].easyArray.length; k++) {
-    randomCategory.easyArray.push(standardCategories[i].easyArray[k]);
-  }
-}
-standardCategories.push(randomCategory);*/
+standardCategories.push(internets);
+
 spicyCategories.push(internets);
 
 allThemes.push(standardCategories);
