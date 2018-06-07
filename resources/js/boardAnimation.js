@@ -11,7 +11,7 @@ var xPie = myCanvas.width/2;
 var yPie = myCanvas.height/2;
 var blackCircleR = rPie/3;
 var arrayOfColours = ['red', 'green', 'orange', 'yellow', 'blue', 'purple',
-'pink', 'gray'];
+'pink', 'gray', 'violet'];
 arrayOfColours.length = categories.length;
 var distBetweenParticles = (rPie - blackCircleR)/noOfTeams;
 

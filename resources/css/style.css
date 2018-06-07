@@ -69,6 +69,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: scroll;
 }
 #list li {
   display: flex;
@@ -379,7 +380,7 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: 'black';
+    background-color: black;
   }
   .currentStandingsFiller,
   #list div span {
